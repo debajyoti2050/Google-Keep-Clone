@@ -1,12 +1,14 @@
-import axios from "axios";
-import { useState } from "react";
+
+import { useEffect, useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useHistory } from "react-router-dom";
+import { register } from "../../actions/userActions";
 import ErrorMessage from "../../components/ErrorMessage";
 import Loading from "../../components/Loading";
 import MainScreen from "../../components/MainScreen";
 
-const RegisterPage = ({history}) => {
+const RegisterPage = () => {
 
     const [email, setEmail] = useState("");
     const [name, setName] = useState("");
@@ -17,35 +19,32 @@ const RegisterPage = ({history}) => {
     const [confirmpassword, setConfirmPassword] = useState("");
     const [message, setMessage] = useState(null);
     const [picMessage, setPicMessage] = useState(null);
-    const [error, setError] = useState(null);
-    const [loading, setLoading] = useState(false);
+
+    const history=useHistory()
+
+    const dispatch = useDispatch()
+
+    const userRegister = useSelector((state) => state.userRegister)
+    const {loading,error,userInfo} =userRegister
+
+
+    useEffect(()=>{
+        if(userInfo){
+            history.push('/mynotes')
+        }
+    })
+ 
 
     const submitHandler = async (e) => {
         e.preventDefault()
 
-        if(password !== confirmpassword){
-            setMessage("Passwords do not match")
-        }else{
-            setMessage(null)
-            try{
-                const config = {
-                    headers:{
-                        "Content-Type":"application/json"
-                    }
-                }
-                setLoading(true)
-                const {data} = await axios.post('/api/users',{name,email,password,pic},config)
-                console.log(data);
-                setLoading(false)
-                localStorage.setItem('userInfo',JSON.stringify(data))
-                
-            }catch(error){
-                setError(error.response.data.message)
-                setLoading(false)
-            }
-        }
+      if (password !== confirmpassword) {
+        setMessage("Passwords do not match");
+      } else {
+        dispatch(register(name, email, password, pic))
         
     }
+  }
 
     const postDetails = (pics) => {
         if (!pics) {
