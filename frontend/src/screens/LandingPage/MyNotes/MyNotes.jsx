@@ -1,37 +1,50 @@
 import React, { useEffect, useState } from "react";
 import { Accordion, Badge, Button, Card } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 // import notes from "../../../data/notes";
 import MainScreen from "../../../components/MainScreen";
 import axios from "axios";
+import {useDispatch, useSelector} from 'react-redux'
+import { listNotes } from "../../../actions/notesActions";
+import Loading from "../../../components/Loading";
+import ErrorMessage from "../../../components/ErrorMessage";
 
 const MyNotes = () => {
+  const history = useHistory();
+  const dispatch = useDispatch();
 
-  const [notes, setNotes]= useState([])
+  const noteList = useSelector(state => state.noteList);
+  const {loading , notes, error}= noteList;
+
+ const userLogin = useSelector(state => state.userLogin);
+ const {userInfo} = userLogin;
+
+
 
 
   const deleteHandler = (id) => {
     if (window.confirm("Are you sure?")) {
     }
   };
-  const fetchNotes = async () => {
-    const {data }=await axios.get('/api/notes')
-    setNotes(data);
-  }
-  useEffect(() => {
-    fetchNotes()
 
-  }, []);
+  useEffect(() => {
+  dispatch(listNotes())
+   if(!userInfo){
+     history.push('/')
+   }
+  }, [dispatch]);
 
 
   return (
-    <MainScreen title="Welcome Back Debajyoti">
+    <MainScreen title={`Welcome Back ${userInfo.name}`}>
       <Link to="/createnote">
         <Button style={{ marginLeft: 10, marginBottom: 6 }} size="lg">
           Create New Note
         </Button>
       </Link>
-      {notes.map((note) => (
+      {loading && <ErrorMessage variant="danger">{error}</ErrorMessage>}
+      {loading && <Loading/>}
+      {notes?.map((note) => (
         <Accordion key={note._id}>
           <Accordion.Item>
           <Card style={{ margin: 10 }}>
@@ -71,7 +84,10 @@ const MyNotes = () => {
                 <blockquote className="blockquote mb-0">
                   <p>{note.content}</p>
                   <footer className="blockquote-footer">
-                    Created on -date
+                    Created on{" "}
+                    <cite title="Source Title">
+                      {note.createdAt.substring(0, 10)}
+                    </cite>
                   </footer>
                 </blockquote>
               </Card.Body>
