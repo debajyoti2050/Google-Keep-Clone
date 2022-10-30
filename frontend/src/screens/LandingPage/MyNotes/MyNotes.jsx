@@ -19,6 +19,9 @@ const MyNotes = () => {
  const userLogin = useSelector(state => state.userLogin);
  const {userInfo} = userLogin;
 
+ const noteCreate = useSelector((state) => state.noteCreate);
+ const {success : successCreate } = noteCreate;
+
 
 
 
@@ -32,7 +35,7 @@ const MyNotes = () => {
    if(!userInfo){
      history.push('/')
    }
-  }, [dispatch]);
+  }, [dispatch, successCreate,history,userInfo]);
 
 
   return (
@@ -44,7 +47,7 @@ const MyNotes = () => {
       </Link>
       {loading && <ErrorMessage variant="danger">{error}</ErrorMessage>}
       {loading && <Loading/>}
-      {notes?.map((note) => (
+      {notes?.reverse().map((note) => (
         <Accordion key={note._id}>
           <Accordion.Item>
           <Card style={{ margin: 10 }}>
