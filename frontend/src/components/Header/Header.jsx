@@ -9,7 +9,7 @@ import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../actions/userActions";
 
-function Header() {
+function Header({ setSearch }) {
 
   const history = useHistory();
 
@@ -37,6 +37,7 @@ function Header() {
                 type="text"
                 placeholder="Search"
                 className="mr-sm-2"
+                onChange={(e) => setSearch(e.target.value)}
               />
             </Form>
           </Nav>

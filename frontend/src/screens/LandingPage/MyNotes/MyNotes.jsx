@@ -9,7 +9,7 @@ import { deleteNoteAction, listNotes } from "../../../actions/notesActions";
 import Loading from "../../../components/Loading";
 import ErrorMessage from "../../../components/ErrorMessage";
 
-const MyNotes = () => {
+const MyNotes = ({search}) => {
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -56,7 +56,9 @@ const MyNotes = () => {
       {loadingDelete && <Loading/>}
       {loading && <ErrorMessage variant="danger">{error}</ErrorMessage>}
       {loading && <Loading/>}
-      {notes?.reverse().map((note) => (
+      {notes?.reverse().filter(filteredNote=>(
+        filteredNote.title.toLowerCase().includes(search.toLowerCase())
+      )).map((note) => (
         <Accordion key={note._id}>
           <Accordion.Item>
           <Card style={{ margin: 10 }}>

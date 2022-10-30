@@ -8,17 +8,22 @@ import LoginPage from "./screens/LoginPage/LoginPage";
 import RegisterPage from "./screens/RegisterPage/RegisterPage";
 import CreateNote from "./screens/CreateNote/CreateNote";
 import SingleNote from "./screens/SingleNote/SingleNote";
+import { useState } from "react";
 
 
 
 export default function App() {
+  const [search, setSearch]= useState('')
+  // console.log(search);
+
+
   return (
     <Router>
-      <Header />
+      <Header setSearch={setSearch}/>
       <main>
         <Switch>
           <Route exact path="/" component={LandingPage} />
-          <Route path="/mynotes" component={MyNotes} />
+          <Route path="/mynotes" component={()=> <MyNotes search={search}/>}/>
           <Route path="/createnote" component={CreateNote} />
           <Route path="/note/:id" component={SingleNote} />
           <Route path="/login" component={LoginPage} />
