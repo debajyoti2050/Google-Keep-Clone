@@ -46,7 +46,7 @@ function Header({ setSearch }) {
               <Link to="/mynotes">MyNotes</Link>
             </Nav.Link>
 
-            <NavDropdown title="Debajyoti" id="basic-nav-dropdown">
+            <NavDropdown title={userInfo.name} id="basic-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">My Profile</NavDropdown.Item>
 
               <NavDropdown.Divider />
