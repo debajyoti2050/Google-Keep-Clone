@@ -10,18 +10,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../actions/userActions";
 
 function Header({ setSearch }) {
-
   const history = useHistory();
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  const userLogin= useSelector((state)=> state.userLogin)
-  const {userInfo} = userLogin
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
 
-  const logoutHandler=()=>{
-    dispatch(logout())
-    history.push('/')
-  }
+  const logoutHandler = () => {
+    dispatch(logout());
+    history.push("/");
+  };
 
   return (
     <Navbar bg="primary" expand="lg" variant="dark">
@@ -41,18 +40,31 @@ function Header({ setSearch }) {
               />
             </Form>
           </Nav>
-          <Nav>
-            <Nav.Link>
-              <Link to="/mynotes">MyNotes</Link>
-            </Nav.Link>
+          {userInfo ? (
+            <Nav>
+              <Nav.Link>
+                <Link to="/mynotes">MyNotes</Link>
+              </Nav.Link>
 
-            <NavDropdown title={userInfo.name} id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">My Profile</NavDropdown.Item>
+              <NavDropdown title={userInfo?.name} id="basic-nav-dropdown">
+                <NavDropdown.Item href="#action/3.1">
+                  My Profile
+                </NavDropdown.Item>
 
-              <NavDropdown.Divider />
-              <NavDropdown.Item onClick={logoutHandler}>Logout</NavDropdown.Item>
-            </NavDropdown>
-          </Nav>
+                <NavDropdown.Divider />
+                <NavDropdown.Item onClick={logoutHandler}>
+                  Logout
+                </NavDropdown.Item>
+              </NavDropdown>
+            </Nav>
+          ) : (
+            <Nav>
+              {" "}
+              <Nav.Link>
+                <Link to="/login">Login</Link>
+              </Nav.Link>{" "}
+            </Nav>
+          )}
         </Navbar.Collapse>
       </Container>
     </Navbar>
