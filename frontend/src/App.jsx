@@ -9,6 +9,7 @@ import RegisterPage from "./screens/RegisterPage/RegisterPage";
 import CreateNote from "./screens/CreateNote/CreateNote";
 import SingleNote from "./screens/SingleNote/SingleNote";
 import { useState } from "react";
+import ProfileScreen from "./screens/ProfileScreen/ProfileScreen";
 
 
 
@@ -25,6 +26,7 @@ export default function App() {
           <Route exact path="/" component={LandingPage} />
           <Route path="/mynotes" component={()=> <MyNotes search={search}/>}/>
           <Route path="/createnote" component={CreateNote} />
+          <Route path="/profile" component={ProfileScreen} />
           <Route path="/note/:id" component={SingleNote} />
           <Route path="/login" component={LoginPage} />
           <Route path="/register" component={RegisterPage} />
