@@ -12,6 +12,8 @@ import { USER_LOGIN_FAIL,
 
 import axios from 'axios'
 
+
+
 export const login =(email,password)=>async(dispatch)=>{
     try{
         dispatch({
@@ -77,6 +79,7 @@ export const register =(name,email,password,pic)=>async(dispatch)=>{
 }
 
 
+
 export const updateProfile =(user)=>async(dispatch,getState)=>{
     try{
         dispatch({
@@ -113,3 +116,4 @@ export const updateProfile =(user)=>async(dispatch,getState)=>{
 
 
     
+
