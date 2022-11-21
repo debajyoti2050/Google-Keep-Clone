@@ -47,7 +47,7 @@ function Header({ setSearch }) {
               </Nav.Link>
 
               <NavDropdown title={userInfo?.name} id="basic-nav-dropdown">
-                <NavDropdown.Item href="#action/3.1">
+                <NavDropdown.Item href="/profile">
                   My Profile
                 </NavDropdown.Item>
 
